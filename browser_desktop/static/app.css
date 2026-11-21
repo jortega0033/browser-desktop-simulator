@@ -1,0 +1,231 @@
+:root {
+  --paper: #f4f0e6;
+  --panel: #fffdf8;
+  --ink: #1c2a2f;
+  --muted: #4a5a60;
+  --line: #b9b19e;
+  --accent: #0b5563;
+  --accent-ink: #ffffff;
+  --warn-bg: #fff1d6;
+  --warn-ink: #5c3b00;
+  --focus: #b3340a;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.bar {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--ink);
+  color: #f4f0e6;
+  border-bottom: 4px solid var(--accent);
+}
+
+.bar h1 {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.85rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.bench {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+.panel {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-radius: 2px 14px 2px 14px;
+  overflow: auto;
+}
+
+.panel h2 {
+  margin: 0;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+button {
+  font: inherit;
+  padding: 0.4rem 0.75rem;
+  color: var(--ink);
+  background: #ece5d3;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) { background: #ddd3b8; }
+
+button.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+button.primary:hover:not(:disabled) { background: #083f4a; }
+
+button:disabled {
+  cursor: not-allowed;
+  color: #55595a;
+  background: #e2e0da;
+  border-color: #77797a;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.files {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.files li { margin: 0 0 0.25rem; }
+
+.files button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  overflow-wrap: anywhere;
+  background: transparent;
+  border-color: var(--line);
+  font-family: ui-monospace, Consolas, "Courier New", monospace;
+  font-size: 0.9rem;
+}
+
+.files button[aria-current="true"] {
+  background: var(--ink);
+  color: #fffdf8;
+  border-color: var(--ink);
+  font-weight: 700;
+}
+
+.note, .meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.field.grow {
+  flex: 1 1 auto;
+  min-height: 8rem;
+}
+
+label { font-weight: 700; font-size: 0.9rem; }
+
+input, textarea {
+  font-family: ui-monospace, Consolas, "Courier New", monospace;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: #ffffff;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  padding: 0.4rem 0.5rem;
+  width: 100%;
+  min-width: 0;
+}
+
+input[readonly] {
+  background: #ebe7da;
+  border-color: var(--line);
+}
+
+textarea {
+  flex: 1 1 auto;
+  min-height: 6rem;
+  resize: none;
+}
+
+.dirty {
+  font-weight: 700;
+  color: var(--warn-ink);
+}
+
+.conflict {
+  padding: 0.5rem;
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+  border: 2px solid var(--warn-ink);
+}
+
+.conflict[hidden], [hidden] { display: none; }
+
+.conflict p { margin: 0 0 0.5rem; }
+
+.status {
+  min-height: 1.4em;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+.status.error { color: #8a1212; }
+
+@media (max-width: 719px) {
+  .bench {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 2fr) minmax(0, 3fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
