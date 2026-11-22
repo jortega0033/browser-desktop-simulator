@@ -92,7 +92,7 @@ Rules that every change must keep:
 
 - `main` is the default branch. CI runs the test suite on Linux and Windows (see "Delivery workflow"); checks are also run locally and reported with their output.
 - One branch per issue. The repository has no naming rule yet; `<issue-number>-<short-slug>` is the suggested form. Small commits with imperative subjects and a type prefix, as in the existing history (`feat:`, and by extension `fix:`, `docs:`, `test:`, `chore:`).
-- Open a pull request that names the issue (`Part of #1`, `Closes #n`). Open it as a draft only after both gates passed on the current diff, and mark it ready once CI is green on that diff; a pull request is never opened or marked ready with a gate left open. Push the ticket branch and open the pull request only when the owner asked in the current session; a `/next-ticket` run counts as that request. Do not merge your own pull request and do not push to `main`.
+- Open a pull request that names the issue (`Part of #1`, `Closes #n`). The order is fixed: local checks pass, Code Reviewer and Reality Checker pass on the current diff, then open it as a draft (`gh pr create --draft`), let CI run on it, and mark it ready (`gh pr ready`) only when CI is green on that diff; a pull request is never opened or marked ready with a gate not run. If CI fails, fix, re-run the local checks and both gates, and push. Push the ticket branch and open the pull request only when the owner asked in the current session; a `/next-ticket` run counts as that request. Do not merge your own pull request and do not push to `main`.
 - Never commit a data directory, a SQLite file, `.env*`, or `.prep/`.
 - Do not change `.claude/agents/`, `LOOP.md`, `loop-constraints.md` or `loop-budget.md` as part of a feature ticket.
 
@@ -105,7 +105,7 @@ Put these in the pull request description. Paste real output; do not summarise a
 3. For a schema change: the test that opens a database created by the previous schema version, and the new schema version reported by `/api/v1/health`.
 4. For a new or changed route: one request and response pair per success and per error code, taken from a server started with `--port 0` on a scratch data directory, and the PRD diff that documents the route.
 5. For a change under `browser_desktop/static/`: a browser run on `http://127.0.0.1:<port>/` with the browser name and version, the viewport sizes checked (800x600 and 360 pixels wide, or the narrowest width the browser allows, stated), keyboard-only operation of the changed controls, and the console and network log free of errors and of requests to any other host. Browser checks are manual: the repository has no approved browser automation.
-6. CI green on the pull request's current diff.
+6. CI green on the pull request's current diff. This is checked by whoever drives the ticket after the draft pull request is open, before it is marked ready; Reality Checker is not asked to confirm it and only checks that CI is configured to run the documented checks.
 7. `git status` showing no stray files, and confirmation that no dependency, external URL, host command or non-loopback listener was added.
 8. Anything not verified, said plainly.
 
@@ -137,7 +137,7 @@ How a ticket gets from the backlog to a ready pull request. Each piece is define
 - **Start:** the owner runs `/next-ticket` ([.claude/skills/next-ticket/SKILL.md](.claude/skills/next-ticket/SKILL.md)). That is the go signal for one ticket and counts as the owner's request to push the ticket branch and open the pull request. Nothing runs on a schedule. The steps of the work are in [.claude/skills/implement-ticket/SKILL.md](.claude/skills/implement-ticket/SKILL.md).
 - **Review gate hook:** [.claude/hooks/role_gate.py](.claude/hooks/role_gate.py) blocks `gh pr create` and `gh pr ready` until Code Reviewer and Reality Checker have run after the last code edit. `ROLE_GATE=off` in the environment Claude Code is started from switches it off for that session; that is the owner's choice, not an agent's.
 - **Permissions:** see [.claude/settings.json](.claude/settings.json).
-- **CI:** [.github/workflows/ci.yml](.github/workflows/ci.yml). The `test` jobs (Ubuntu and Windows, Python 3.12 and 3.13) must be green on the current diff before a pull request is marked ready.
+- **CI:** [.github/workflows/ci.yml](.github/workflows/ci.yml). The `test` jobs (Ubuntu and Windows, Python 3.12 and 3.13) run on the draft pull request and must be green on the current diff before it is marked ready; they cannot be green before the draft exists, so the gates do not wait for them.
 - **Pull request:** [.github/pull_request_template.md](.github/pull_request_template.md).
 - **Ticket labels:** `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`. Ticket form: [.github/ISSUE_TEMPLATE/implementation-ticket.md](.github/ISSUE_TEMPLATE/implementation-ticket.md).
 - **Changelog:** every ticket pull request adds one line to [CHANGELOG.md](CHANGELOG.md).

@@ -18,8 +18,8 @@ Epic: issue #1. Dependency order from the epic: #7, #2, #8, #4, #5, #3, #6, #9. 
 3. **Claim.** Add `status:in-progress` to the ticket.
 4. **Worktree and branch.** From the repository root, `git fetch origin` and `git worktree add ../browser-desktop-simulator-worktrees/<number>-<short-slug> -b <number>-<short-slug> origin/main`, as the Git workflow in `CLAUDE.md` says (one branch per issue, `<issue-number>-<short-slug>`). Work only inside that worktree. Never work on `main`.
 5. **Implement.** Follow `.claude/skills/implement-ticket/SKILL.md` completely: the roles, the checks, the review gate and the acceptance gate.
-6. **Pull request.** Push the ticket branch, open the pull request with `.github/pull_request_template.md`, and mark it ready only after both gates have passed on the current diff and CI is green on it. The review gate hook blocks `gh pr create` and `gh pr ready` until the gate roles have run after the last code edit. Never leave a gate open: if a gate cannot pass, keep working or stop and report; do not open or ready the pull request.
-7. **Report.** Comment on the issue with the pull request link and the evidence summary. Leave `status:in-progress` on the ticket.
+6. **Pull request.** Push the ticket branch, run the local checks and both gates, then open a draft pull request (`gh pr create --draft`) with `.github/pull_request_template.md`. CI runs on the draft; if it fails, fix, re-run the local checks and both gates, and push. Mark it ready (`gh pr ready`) only when CI is green on the current diff; you check that, not Reality Checker. The review gate hook blocks `gh pr create` and `gh pr ready` until the gate roles have run after the last code edit. Never run a gate half way: if a gate cannot pass, keep working or stop and report; do not open or ready the pull request.
+7. **Report.** Comment on the issue with the pull request link, the CI run link and the evidence summary. Leave `status:in-progress` on the ticket.
 
 ## Never
 
