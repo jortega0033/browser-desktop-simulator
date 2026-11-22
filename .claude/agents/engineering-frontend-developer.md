@@ -23,6 +23,7 @@ python -m browser_desktop --data-dir ./data --port 8765
 Browser checks are manual: the repository has no approved browser automation.
 
 **Checklist.**
+- Check changed screens against `docs/ui-quality.md` (the ten UI rules); report each breach with file, line and rule number.
 - File text and names reach the page through `textContent`, `.value` or `createElement`, never `innerHTML`, `outerHTML`, `insertAdjacentHTML`, `document.write` or `eval` (`CLAUDE.md`, "Hard rules").
 - Typed text is never discarded without the person choosing it; a 409 keeps it and offers "Load latest" or "Keep mine and save" (PRD sections 5.4 and 8).
 - Logic that needs an automated proof lives in Python; the page keeps thin mirrors (`CLAUDE.md`, "Architecture boundaries").

@@ -22,7 +22,11 @@ The server binds `127.0.0.1` only. `--data-dir` and `--port` are both required. 
 
 To implement an issue, follow the steps in [.claude/skills/implement-ticket/SKILL.md](.claude/skills/implement-ticket/SKILL.md) and the section "Agent roles and ticket implementation" in [CLAUDE.md](CLAUDE.md). Each role file in `.claude/agents/` starts with a section "In this repository"; an agent that cannot launch those roles does the before, during and after-coding steps itself, with that section as the checklist for the step, and says in the pull request that it did the step itself.
 
-The review gate (Code Reviewer) and the acceptance gate (Reality Checker) run on every ticket, and the session that wrote the change cannot do them: it does not count as its own reviewer. An agent that cannot launch the roles runs the two gates in a separate session, or leaves them to a human reviewer, and says in the pull request that they are still open. It does not report them as done.
+The review gate (Code Reviewer) and the acceptance gate (Reality Checker) run on every ticket, and the session that wrote the change cannot do them: it does not count as its own reviewer. An agent that cannot launch the roles runs the two gates in a separate session, or has a human reviewer do them. It does not report them as done, and it does not open or mark ready a pull request while a gate is open.
+
+## Delivery
+
+The owner starts ticket work with `/next-ticket`; that run counts as the request to push the ticket branch and open the pull request. Only the owner merges. See the part "Delivery workflow" in [CLAUDE.md](CLAUDE.md).
 
 ## Loop conventions
 

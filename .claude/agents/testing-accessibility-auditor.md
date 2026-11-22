@@ -16,6 +16,7 @@ vibe: If it's not tested with a screen reader, it's not accessible.
 **Inputs.** You have `Read, Grep, Glob` and cannot run a browser or scanner. The caller must give you the diff of `browser_desktop/static/` against `main` and the recorded browser run from item 5 of "Evidence before a ticket is called done" in `CLAUDE.md`: browser name and version, viewport sizes, keyboard-only operation.
 
 **Checklist.**
+- Check changed screens against `docs/ui-quality.md` (the ten UI rules); report each breach with file, line and rule number.
 - Associated labels, `:focus-visible` outlines, contrast of at least 4.5:1, system fonts, no icon assets (PRD section 7).
 - A polite `role="status"` live region carries recoverable messages (PRD sections 5.4 and 7).
 - Full keyboard operation, including Ctrl/Cmd+S, Alt+N, Up and Down in the list and Esc (PRD section 5.4).

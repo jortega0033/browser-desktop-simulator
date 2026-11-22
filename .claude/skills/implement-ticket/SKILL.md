@@ -8,20 +8,21 @@ argument-hint: "[issue number]"
 
 Use this playbook for every implementation ticket in this repository. `CLAUDE.md` holds the commands, the architecture boundaries, the Git workflow and the evidence rules; where this playbook and `CLAUDE.md` differ, `CLAUDE.md` wins.
 
-The project subagents in `.claude/agents/` are part of the work. Delegate to them at the steps below without waiting to be asked. If a step names a role that is not installed or cannot be launched, do that step yourself and say so in the pull request. The two gates (steps 8 and 9) are the exception: the session that wrote the change cannot review or accept it, so run them in a separate session or leave them to a human reviewer, and say in the pull request that they are still open.
+The project subagents in `.claude/agents/` are part of the work. Delegate to them at the steps below without waiting to be asked. If a step names a role that is not installed or cannot be launched, do that step yourself and say so in the pull request. The two gates (steps 8 and 9) are the exception: the session that wrote the change cannot review or accept it, so run them in a separate session or have a human reviewer do them. The pull request is opened or marked ready only after both gates passed on the current diff.
 
 ## Steps
 
 1. **Read the ticket.** `gh issue view <number>` and the epic it belongs to. Check that every prerequisite issue is closed and that no owner decision named in the ticket is still open. If the ticket is blocked, stop and say what blocks it.
 2. **Read the rules.** `CLAUDE.md`, then the architecture notes it links to.
-3. **Orient and check the approach.** Delegate as the table "Before coding" says. Settle open design questions before writing code.
+3. **Orient and check the approach.** Delegate as the table "Before coding" says. Settle open design questions before writing code. For a UI ticket (anything under `browser_desktop/static/`), start with the `ui-ux-pro-max` skill: search its design system for the product type with `python .claude/skills/ui-ux-pro-max/scripts/search.py "<product type>" --design-system`, and keep to the ten rules in `docs/ui-quality.md`.
 4. **Branch** as the Git workflow in `CLAUDE.md` says. Never work on the default branch.
 5. **Implement** inside the ticket's stated scope. Delegate the work to the implementing role that matches the files being changed (table "While coding"). Do not widen scope; note anything else you find as a follow-up.
 6. **Test.** Add or change tests for every acceptance criterion and material edge case, then run the checks listed in `CLAUDE.md`. Record each command and its result.
 7. **Specialist review.** Run every role in the table "After coding" whose trigger matches the change.
 8. **Review gate, always.** Run Code Reviewer on the full diff. Fix every material finding, re-run the checks, and have the reviewer look again until no material finding is left.
 9. **Acceptance gate, always.** Run Reality Checker with the ticket's acceptance criteria and the evidence you produced. Do not call the ticket done unless it passes.
-10. **Hand off.** Capture the evidence `CLAUDE.md` asks for and open a draft pull request that names the issue. Do not merge.
+10. **UI and copy check.** For a UI ticket, check every changed screen against `docs/ui-quality.md` and record the result. Run user-facing copy, documentation and the pull request text through the `unslop` skill before the pull request is opened.
+11. **Hand off.** Capture the evidence `CLAUDE.md` asks for, add one line to `CHANGELOG.md`, and open the pull request with `.github/pull_request_template.md`, naming the issue. Mark it ready only when both gates passed on the current diff and CI is green on it; the gate hook blocks `gh pr create` and `gh pr ready` otherwise. A `/next-ticket` run counts as the owner's request to push and open the pull request; in any other session ask first. Only the owner merges. Do not merge.
 
 ## Roles
 
@@ -60,4 +61,4 @@ The project subagents in `.claude/agents/` are part of the work. Delegate to the
 - The session or role that wrote a change does not count as its reviewer.
 - Read-only reviewers cannot run commands. Give them the diff, the acceptance criteria and the recorded command output.
 - Where a role's general advice (frameworks, dependencies, cloud services) conflicts with `CLAUDE.md`, `CLAUDE.md` wins.
-- In the pull request description, add a section "Agent roles run" listing each role that ran, what it was asked and its verdict, any step you did yourself because a role was missing, and any gate that is still open.
+- In the pull request description, add a section "Agent roles run" listing each role that ran, what it was asked and its verdict, and any step you did yourself because a role was missing.
