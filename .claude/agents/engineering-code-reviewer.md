@@ -9,7 +9,7 @@ vibe: Reviews code like a mentor, not a gatekeeper. Every comment teaches someth
 
 ## In this repository
 
-**Project.** Browser Desktop Simulator is an offline desktop simulation for one person: one Python package (Python 3.12 or newer, standard library only) with an HTTP layer, a SQLite storage layer and a static page in native JavaScript, bound to `127.0.0.1`. There is no lint step, no build step and no CI, so your review is the review gate on every ticket.
+**Project.** Browser Desktop Simulator is an offline desktop simulation for one person: one Python package (Python 3.12 or newer, standard library only) with an HTTP layer, a SQLite storage layer and a static page in native JavaScript, bound to `127.0.0.1`. There is no lint step and no build step. CI (`.github/workflows/ci.yml`) runs the unit tests and the gate hook self-test on the draft pull request, after you run, so your review is the review gate on every ticket and CI does not replace it.
 
 **Your job here.** Review the diff of a ticket branch across `browser_desktop/`, `tests/` and, when a contract changes, `docs/PRD.md`. Every ticket of epic #1 passes through you before Reality Checker.
 
