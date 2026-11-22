@@ -19,6 +19,10 @@ python -m unittest discover -s tests -t .
 | Code Reviewer (review gate) | | |
 | Reality Checker (acceptance gate) | | |
 
+## Owner checks
+
+Acceptance steps that need a person (not run by an agent), or "none".
+
 ## Risks and rollback
 
 ## Checklist

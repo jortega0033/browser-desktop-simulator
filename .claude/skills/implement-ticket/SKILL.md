@@ -22,7 +22,7 @@ The project subagents in `.claude/agents/` are part of the work. Delegate to the
 8. **UI, copy and changelog.** For a UI ticket, check every changed screen against `docs/ui-quality.md` and record the result. Run user-facing copy, documentation and the pull request text through the `unslop` skill and add one line to `CHANGELOG.md`, so the gates judge the final diff.
 9. **Review gate, always.** Run Code Reviewer on the full diff. Fix every material finding, re-run the checks, and have the reviewer look again until no material finding is left.
 10. **Acceptance gate, always.** Run Reality Checker with the ticket's acceptance criteria and the evidence you produced. Do not call the ticket done unless it passes.
-11. **Hand off.** Capture the evidence `CLAUDE.md` asks for and open a draft pull request (`gh pr create --draft`) with `.github/pull_request_template.md`, naming the issue, once the local checks have passed and both gates have passed on the current diff. Then wait for CI on the draft. If CI fails, fix, re-run the local checks and both gates, and push. When CI is green, run `gh pr ready` and comment on the issue with the CI run link. Green CI is checked by you, not by Reality Checker. The gate hook blocks `gh pr create` and `gh pr ready` unless both gates ran after the last code edit. A `/next-ticket` run counts as the owner's request to push and open the pull request; in any other session ask first. Only the owner merges. Do not merge.
+11. **Hand off.** Capture the evidence `CLAUDE.md` asks for and open a draft pull request (`gh pr create --draft`) with `.github/pull_request_template.md`, naming the issue, once the local checks have passed and both gates have passed on the current diff. Before calling the two gates, write the diff and the recorded check output to `.claude/state/review/` and name those files in the request, because the gates have no shell. Then wait for CI on the draft without polling (end the turn with "Draft pull request #N is waiting for CI" and read `gh pr checks <n>` once when woken). If CI fails, fix, re-run the local checks and both gates, and push. When CI is green, run `gh pr ready` and comment on the issue with the CI run link. Green CI is checked by you, not by Reality Checker. The gate hook blocks `gh pr create` and `gh pr ready` unless both gates ran after the last code edit. A `/next-ticket` run counts as the owner's request to push and open the pull request; in any other session ask first. Only the owner merges. Do not merge.
 
 ## Roles
 
@@ -58,6 +58,9 @@ The project subagents in `.claude/agents/` are part of the work. Delegate to the
 
 ## Rules
 
+- Do not change `.claude/agents/`, `.claude/skills/`, `.claude/hooks/`, `.claude/settings.json` or `.claude/agency-agents/` in a ticket; edits made through a shell command are not covered by the `ask` rules.
+- Acceptance steps that need a person ("by hand in a normal browser", "manual, recorded"): do them as far as an agent can (a scripted or headless run, with the evidence) and list the rest under "Owner checks" in the pull request.
+- A ticket labelled `tracking` or with open sub-issues is a container: work its sub-issues, one pull request each. The pull request of the last open sub-issue also says `Closes #<parent>`.
 - The session or role that wrote a change does not count as its reviewer.
 - Read-only reviewers cannot run commands. Give them the diff, the acceptance criteria and the recorded command output.
 - Where a role's general advice (frameworks, dependencies, cloud services) conflicts with `CLAUDE.md`, `CLAUDE.md` wins.

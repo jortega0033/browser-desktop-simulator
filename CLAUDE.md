@@ -13,7 +13,7 @@ An offline desktop simulation in the browser for one person. One Python package,
 | Product scope, milestones, M1 contracts, fixture, acceptance matrix, open choices | [docs/PRD.md](docs/PRD.md) |
 | How the code is built, the traced save workflow, the rules the code keeps, differences between the PRD and the code, what is still unverified | [docs/architecture.md](docs/architecture.md) |
 | Launch, smoke steps, limits, baseline verification | [README.md](README.md) |
-| Backlog | Epic issue #1 and its sub-issues on GitHub, in dependency order: #7, #2, #8, #4, #5, #3, #6, #9. The epic gives the dependencies, the parallel tracks and the estimates. |
+| Backlog | Epic issue #1 and its sub-issues on GitHub, in the order of the epic table: #7, #2, #8, #4, #5, #3, #6, #11, #9 (sub-issues of a ticket follow in their listed order). The epic gives the dependencies, the parallel tracks and the estimates. |
 | Loop setup and its limits | [LOOP.md](LOOP.md), [loop-constraints.md](loop-constraints.md) |
 | Project subagents and their origin | [.claude/agency-agents/README.md](.claude/agency-agents/README.md) |
 | UI rules | [docs/ui-quality.md](docs/ui-quality.md) |
@@ -108,6 +108,7 @@ Put these in the pull request description. Paste real output; do not summarise a
 6. CI green on the pull request's current diff. This is checked by whoever drives the ticket after the draft pull request is open, before it is marked ready; Reality Checker is not asked to confirm it and only checks that CI is configured to run the documented checks.
 7. `git status` showing no stray files, and confirmation that no dependency, external URL, host command or non-loopback listener was added.
 8. Anything not verified, said plainly.
+9. Acceptance steps that need a person ("by hand in a normal browser", "manual, recorded"): done as far as an agent can, with the evidence, and the rest listed under "Owner checks" in the pull request.
 
 ## Agent roles and ticket implementation
 
@@ -118,7 +119,7 @@ When asked to implement, continue or finish a GitHub issue, follow the playbook 
 - **Before coding:** Codebase Onboarding Engineer (unfamiliar area) and Software Architect (module boundary, data model, schema, API or dependency).
 - **While coding:** Backend Architect for `browser_desktop/*.py`, Frontend Developer for `browser_desktop/static/`. Database Optimizer does not edit: give it SQL, schema and migration changes to check while they are being written.
 - **After coding, when the trigger matches the change:** Application Security Engineer, Accessibility Auditor, API Tester.
-- **Gates on every ticket, whatever its size, before it is called done:** Code Reviewer on the full diff (review gate), then Reality Checker on the acceptance criteria and the evidence (acceptance gate).
+- **Gates on every ticket, whatever its size, before it is called done:** Code Reviewer on the full diff (review gate), then Reality Checker on the acceptance criteria and the evidence (acceptance gate). They have no shell, so the driver writes the diff and the check output to `.claude/state/review/` first and names those files in the request.
 
 Rules for all of them:
 
@@ -134,9 +135,9 @@ Issue triage runs at L1: report-only, started by hand, no scheduler, no GitHub w
 
 How a ticket gets from the backlog to a ready pull request. Each piece is defined in its own file; this part only links them.
 
-- **Start:** the owner runs `/next-ticket` ([.claude/skills/next-ticket/SKILL.md](.claude/skills/next-ticket/SKILL.md)). That is the go signal for one ticket and counts as the owner's request to push the ticket branch and open the pull request. Nothing runs on a schedule. The steps of the work are in [.claude/skills/implement-ticket/SKILL.md](.claude/skills/implement-ticket/SKILL.md).
+- **Start:** the owner runs `/next-ticket` ([.claude/skills/next-ticket/SKILL.md](.claude/skills/next-ticket/SKILL.md)). That is the go signal for one ticket and counts as the owner's request to push the ticket branch and open the pull request. It picks leaf tickets only (a `tracking` ticket or one with open sub-issues is a container; the last sub-issue's pull request also closes the parent), and after the draft pull request it ends its turn with "Draft pull request #N is waiting for CI" instead of polling. Nothing runs on a schedule. The steps of the work are in [.claude/skills/implement-ticket/SKILL.md](.claude/skills/implement-ticket/SKILL.md).
 - **Review gate hook:** [.claude/hooks/role_gate.py](.claude/hooks/role_gate.py) blocks `gh pr create` and `gh pr ready` until Code Reviewer and Reality Checker have run after the last code edit. `ROLE_GATE=off` in the environment Claude Code is started from switches it off for that session; that is the owner's choice, not an agent's.
-- **Permissions:** see [.claude/settings.json](.claude/settings.json).
+- **Permissions:** see [.claude/settings.json](.claude/settings.json). Edits to agent configuration ask first at any depth, so the copies in a ticket worktree ask too.
 - **CI:** [.github/workflows/ci.yml](.github/workflows/ci.yml). The `test` jobs (Ubuntu and Windows, Python 3.12 and 3.13) run on the draft pull request and must be green on the current diff before it is marked ready; they cannot be green before the draft exists, so the gates do not wait for them.
 - **Pull request:** [.github/pull_request_template.md](.github/pull_request_template.md).
 - **Ticket labels:** `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`. Ticket form: [.github/ISSUE_TEMPLATE/implementation-ticket.md](.github/ISSUE_TEMPLATE/implementation-ticket.md).
