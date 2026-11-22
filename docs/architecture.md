@@ -83,7 +83,7 @@ Each finding names the ticket that deals with it. "Open" means the owner has to 
 | D1 | The README requires "Python 3.12"; the code also runs on 3.13.14. The bound is a minimum, not an exact version. | README "Requirements"; test run in section 7 | NEW-C (README) |
 | D2 | A migration is one SQL statement: `_migrate` calls `conn.execute(sql)` once per entry (`storage.py:194-199`). P1 needs several statements and a data copy from the M1 table, and three tickets add migrations. | source | NEW-A |
 | D3 | The `files` table is `WITHOUT ROWID`, keyed by `name` with `CHECK(length(name) BETWEEN 1 AND 64)` (`storage.py:28-34`). SQLite cannot change a CHECK in place, so the path model needs a new table and a copy. | source | #2 |
-| D4 | The PRD reserves only migration 2 (section 9). The issues use 2 for paths and versions (#2), 3 for the layout (#3) and 4 for the journal (#5), and #3 and #5 can be built at the same time. | PRD section 9; issues #3, #5 | Epic: the numbers are reserved per ticket; NEW-A makes the runner apply any missing number |
+| D4 | The PRD reserves only migration 2 (section 9). The issues use 2 for paths and versions (#2), 3 for the layout (#3) and 4 for the journal (#5), and #3 and #5 can be built at the same time. | PRD section 9; issues #3, #5 | Epic: the numbers are reserved per ticket; NEW-A makes the runner apply any missing number, keeps the list sorted and takes its highest number as the latest version |
 | D5 | Routing is one `if/elif` chain with the error mapping inline (`server.py:197-246`). Every planned ticket adds routes there, so parallel tickets would edit the same lines. | source | NEW-A (route table) |
 | D6 | Static files are a fixed table of four routes, and a test pins exactly that set (`tests/test_api.py` `test_static_routes_cover_exactly_the_allowlist`). A new script or style sheet answers 404 until both change. | source | NEW-A (manifest), then each ticket adds its files |
 | D7 | The static safety tests read `index.html`, `app.css` and `app.js` only (`tests/test_static_assets.py:41-44`). A new script would not be scanned for `innerHTML` or external URLs. | source | NEW-A |
@@ -117,7 +117,7 @@ Status: **Planned**. This is the design the epic and its tickets assume. Nothing
 - **One write path.** Every change to a file goes through `Storage`. The command interpreter (#4), the fixtures and demo workspace (#6) and restore (#5) call `Storage` methods and never run SQL, so the journal of #5 covers them without knowing about them.
 - **Logic in Python.** Path rules, layout validation and clamping, the interpreter and the registry schema are Python modules with unit tests. The page mirrors what it needs.
 - **Page.** ES modules loaded from the static manifest: an API client, the file browser (NEW-B), the window manager (#3), the terminal panel (#4), the apps and registry mirror (#6).
-- **Migrations.** 2: nodes and versions (#2). 3: layout (#3). 4: journal (#5). Each is applied when missing, whatever the merge order.
+- **Migrations.** 2: nodes and versions (#2). 3: layout (#3). 4: journal (#5). Each is applied when missing, whatever the merge order. `MIGRATIONS` stays sorted by version and the latest version is its highest number (NEW-A). Today `LATEST_VERSION` is the last entry (`storage.py:37`), which is only correct for a sorted list.
 
 ## 7. What was run during preparation
 

@@ -80,7 +80,7 @@ Keep new code on the correct side of these lines. A new module is right when a f
 Rules that every change must keep:
 
 - A save succeeds only when `base_revision` equals the stored revision. A stale save changes nothing and answers 409 with the stored file under `current`. Any new write to a file (rename, move, copy target, redirect from a command, restore) keeps the same guarantee inside one transaction together with its derived rows.
-- Existing databases open under new code. A schema change is a new entry at the end of `MIGRATIONS`, never an edit of an old one, with a test that opens a database made by the previous version. A database newer than the code is refused untouched.
+- Existing databases open under new code. A schema change adds an entry to `MIGRATIONS` at its reserved number (the epic, issue #1, reserves the numbers), keeping the list sorted by version. It never edits an entry that has shipped, and it comes with a test that opens a database made by the previous version. The latest version is read from the list (today from its last entry, `storage.py:37`), so an entry out of order would make the code refuse valid databases as too new. A database newer than the code is refused untouched.
 - Every route checks `Host`. Every mutating route also checks `Origin` when the header is present. Error responses use the envelope `{"error": {"code", "message"}}` and never contain a traceback.
 - Limits stay enforced on the server, and on the page where the page can know them: name 1 to 64 characters from `A-Za-z0-9._-` starting with a letter or digit, text at most 65,536 UTF-8 bytes with no NUL, request body at most 131,072 bytes, at most 500 files.
 - Typed text is never discarded without the person choosing it.
