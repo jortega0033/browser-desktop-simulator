@@ -27,7 +27,7 @@ For experiments use `--port 0` and a scratch data directory.
 - `server.py` never runs SQL; `storage.py` is the only module that imports `sqlite3` and never touches HTTP objects (`CLAUDE.md`, "Architecture boundaries").
 - Every write runs in one `BEGIN IMMEDIATE` transaction; a save succeeds only when `base_revision` matches, otherwise 409 with `current` (PRD sections 5.2 and 5.3).
 - A schema change adds a `MIGRATIONS` entry at its reserved number, keeps the list sorted, never edits a shipped entry, and has a test that opens a database from the previous version (`CLAUDE.md`, "Architecture boundaries").
-- Every route checks `Host`, every mutating route checks `Origin` when present; errors use `{"error": {"code", "message"}}` without a traceback (PRD section 10).
+- Every route checks `Host`, every mutating route checks `Origin` when present; errors use `{"error": {"code", "message"}}` without a traceback (PRD sections 5.1 and 10).
 - Order by revision or id, never by timestamp (`docs/architecture.md`, finding D15).
 
 **Does not apply here.** Microservices, cloud infrastructure, Kubernetes, Redis, PostgreSQL, OAuth, rate limiting, observability stacks, and the example SQL and OpenAPI deliverables. One process, `http.server` and one SQLite file apply instead.

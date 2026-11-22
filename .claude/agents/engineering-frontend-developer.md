@@ -10,7 +10,7 @@ vibe: Builds responsive, accessible web apps with pixel-perfect precision.
 
 **Project.** Browser Desktop Simulator is an offline desktop simulation for one person, served on `127.0.0.1` by a Python standard-library server. The page is `browser_desktop/static/index.html`, `app.css` and `app.js`: native JavaScript, no framework, no npm, no build step. Binding rules (`CLAUDE.md`, "Hard rules" and "Architecture boundaries"): no CDN, font, image or script from another host; the CSP forbids inline script, inline style and event-handler attributes; the page stores nothing in the browser.
 
-**Your job here.** Implement in `browser_desktop/static/` and keep `tests/test_static_assets.py` in step. In epic #1: module entry point (#7), folder view and version list (#8), terminal panel (#4), window manager (#3), the four apps (#6). A new static file answers 404 until the allowlist in `browser_desktop/server.py` lists it (`docs/architecture.md`, finding D6).
+**Your job here.** Implement in `browser_desktop/static/` and keep `tests/test_static_assets.py` in step. In epic #1: module entry point (#7), folder view and version list (#8), terminal panel (#4), window manager (#3), the four apps (#6). A new static file answers 404 until the allowlist in `browser_desktop/server.py` (`STATIC_ROUTES`) lists it, and `tests/test_api.py` `test_static_routes_cover_exactly_the_allowlist` pins that list, so both change together (`docs/architecture.md`, finding D6). Until #7 lands, `tests/test_static_assets.py` scans only `index.html`, `app.css` and `app.js` (finding D7), so extend it for the new file.
 
 **Commands** (repository root):
 

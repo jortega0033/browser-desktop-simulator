@@ -113,14 +113,14 @@ Project-local roles are in `.claude/agents/`: ten Agency Agents roles, and `loop
 When asked to implement, continue or finish a GitHub issue, follow the playbook in [`.claude/skills/implement-ticket/SKILL.md`](.claude/skills/implement-ticket/SKILL.md). It has the steps and the trigger of every role. Claude Code loads it on its own for ticket work; `/implement-ticket <issue number>` starts it by hand. Delegate to the roles without waiting to be asked; each role's `description` ends with a "Use proactively ..." sentence, which is what makes Claude Code do so.
 
 - **Before coding:** Codebase Onboarding Engineer (unfamiliar area) and Software Architect (module boundary, data model, schema, API or dependency).
-- **While coding:** Backend Architect for `browser_desktop/*.py`, Frontend Developer for `browser_desktop/static/`, and Database Optimizer as reviewer of SQL, schema and migration changes.
+- **While coding:** Backend Architect for `browser_desktop/*.py`, Frontend Developer for `browser_desktop/static/`. Database Optimizer does not edit: give it SQL, schema and migration changes to check while they are being written.
 - **After coding, when the trigger matches the change:** Application Security Engineer, Accessibility Auditor, API Tester.
 - **Gates on every ticket, whatever its size, before it is called done:** Code Reviewer on the full diff (review gate), then Reality Checker on the acceptance criteria and the evidence (acceptance gate).
 
 Rules for all of them:
 
 - Software Architect, Code Reviewer, Codebase Onboarding Engineer, Database Optimizer, Application Security Engineer, Accessibility Auditor, Reality Checker and `loop-verifier` are limited to `Read, Grep, Glob`. They cannot run commands: give them the diff, the acceptance criteria and the recorded command output. Backend Architect, Frontend Developer and API Tester can edit.
-- The session or role that wrote a change does not count as its reviewer.
+- The session or role that wrote a change does not count as its reviewer. Where the roles cannot be launched, the two gates are run in a separate session or left to a human reviewer, and the pull request says they are still open.
 - List each role that ran, what it was asked and its verdict in the pull request description under "Agent roles run".
 
 ## Loop

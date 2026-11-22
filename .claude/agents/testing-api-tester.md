@@ -16,7 +16,7 @@ vibe: Breaks your API before your users do.
 
 ```
 python -m unittest discover -s tests -t .
-python -m unittest tests.test_storage.CrudTests.test_update_cas
+python -m unittest tests.test_api.FileApiTests.test_conflict_returns_current
 python -m browser_desktop --data-dir ./data --port 8765
 curl -s http://127.0.0.1:8765/api/v1/health
 ```
