@@ -92,7 +92,7 @@ Rules that every change must keep:
 
 - `main` is the default branch. CI runs the test suite on Linux and Windows (see "Delivery workflow"); checks are also run locally and reported with their output.
 - One branch per issue. The repository has no naming rule yet; `<issue-number>-<short-slug>` is the suggested form. Small commits with imperative subjects and a type prefix, as in the existing history (`feat:`, and by extension `fix:`, `docs:`, `test:`, `chore:`).
-- Open a pull request that names the issue (`Part of #1`, `Closes #n`). Keep it a draft until both gates have passed on the current diff and CI is green, then mark it ready; a pull request is never opened or marked ready with a gate left open. Push the ticket branch and open the pull request only when the owner asked in the current session; a `/next-ticket` run counts as that request. Do not merge your own pull request and do not push to `main`.
+- Open a pull request that names the issue (`Part of #1`, `Closes #n`). Open it as a draft only after both gates passed on the current diff, and mark it ready once CI is green on that diff; a pull request is never opened or marked ready with a gate left open. Push the ticket branch and open the pull request only when the owner asked in the current session; a `/next-ticket` run counts as that request. Do not merge your own pull request and do not push to `main`.
 - Never commit a data directory, a SQLite file, `.env*`, or `.prep/`.
 - Do not change `.claude/agents/`, `LOOP.md`, `loop-constraints.md` or `loop-budget.md` as part of a feature ticket.
 
@@ -136,7 +136,7 @@ How a ticket gets from the backlog to a ready pull request. Each piece is define
 
 - **Start:** the owner runs `/next-ticket` ([.claude/skills/next-ticket/SKILL.md](.claude/skills/next-ticket/SKILL.md)). That is the go signal for one ticket and counts as the owner's request to push the ticket branch and open the pull request. Nothing runs on a schedule. The steps of the work are in [.claude/skills/implement-ticket/SKILL.md](.claude/skills/implement-ticket/SKILL.md).
 - **Review gate hook:** [.claude/hooks/role_gate.py](.claude/hooks/role_gate.py) blocks `gh pr create` and `gh pr ready` until Code Reviewer and Reality Checker have run after the last code edit. `ROLE_GATE=off` in the environment Claude Code is started from switches it off for that session; that is the owner's choice, not an agent's.
-- **Permissions:** [.claude/settings.json](.claude/settings.json) allows the documented commands, denies force pushes, pushes to `main`, `gh pr merge`, releases and reads of `.env`, and asks before edits to CI, agent configuration and Loop files.
+- **Permissions:** see [.claude/settings.json](.claude/settings.json).
 - **CI:** [.github/workflows/ci.yml](.github/workflows/ci.yml). The `test` jobs (Ubuntu and Windows, Python 3.12 and 3.13) must be green on the current diff before a pull request is marked ready.
 - **Pull request:** [.github/pull_request_template.md](.github/pull_request_template.md).
 - **Ticket labels:** `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`. Ticket form: [.github/ISSUE_TEMPLATE/implementation-ticket.md](.github/ISSUE_TEMPLATE/implementation-ticket.md).

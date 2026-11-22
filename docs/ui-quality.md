@@ -18,6 +18,6 @@ Ten rules for every screen and every piece of user-facing text in this repositor
 - A UI ticket starts with the `ui-ux-pro-max` skill (`.claude/skills/ui-ux-pro-max/`): search its design system for the product type, then keep to these rules where the skill's suggestions differ.
 - A UI ticket ends with a check of every changed screen against this file, recorded in the pull request.
 - User-facing copy, documentation and pull request text go through the `unslop` skill (`.claude/skills/unslop/`) before the pull request is opened.
-- Frontend Developer, UI-related reviewers, Accessibility Auditor and Code Reviewer name this file in their checklists (`.claude/agents/`).
+- Frontend Developer, Accessibility Auditor and Code Reviewer name this file in their checklists (`.claude/agents/`). UI Designer and UX Architect are not installed in this repository.
 - Enforcement is by the review gate (Code Reviewer on every ticket), not by a script. Rule 1 can be linted; rule 2 cannot be detected reliably from CSS.
 - Where a rule conflicts with `CLAUDE.md` (for example the no-inline-style CSP), `CLAUDE.md` wins.
