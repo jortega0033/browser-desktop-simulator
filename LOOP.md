@@ -76,6 +76,7 @@ Run on 2026-11-22 (Windows 11, Node v22.23.4) after the scaffold was adapted:
 
 - `doctor .`: `Ready: 100/100 L2`, `Status: HEALTHY (exit 0)`, files `state=issue-triage-state.md LOOP.md=yes budget=yes run-log=yes gate=no`, note "Could not parse loop-sync JSON output".
 - `status .`: pattern `issue-triage`, `Ready: 100/100 L2`, state "not yet run", `constraints=yes`, no recent runs. Its closing hint says "Schedule a report-only first run"; here the first run is started by hand, not scheduled.
+- `doctor .` again later the same day, after the scaffold, `CLAUDE.md` and `docs/architecture.md` were committed: `Ready: 100/100 L3`, `Status: HEALTHY (exit 0)`, same files line and same note. The label changed from L2 to L3 between the two runs; which change caused it was not isolated, and no triage run had been made. The operating level stays L1.
 
 ## Doctor suggestions that were not adopted
 
