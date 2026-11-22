@@ -18,6 +18,10 @@ python -m browser_desktop --data-dir ./data --port 8765
 
 The server binds `127.0.0.1` only. `--data-dir` and `--port` are both required. Stop it with Ctrl+C.
 
+## Ticket work
+
+To implement an issue, follow the steps in [.claude/skills/implement-ticket/SKILL.md](.claude/skills/implement-ticket/SKILL.md) and the section "Agent roles and ticket implementation" in [CLAUDE.md](CLAUDE.md). Each role file in `.claude/agents/` starts with a section "In this repository"; an agent that cannot launch those roles reads that section as the checklist for the step and says in the pull request that it did the step itself. The code review and the acceptance check against evidence run on every ticket.
+
 ## Loop conventions
 
 - The loop runs at L1: report-only, started by hand. It proposes; it does not label, comment, close, edit source, push or merge.
