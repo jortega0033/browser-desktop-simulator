@@ -13,7 +13,7 @@ An offline desktop simulation in the browser for one person. One Python package,
 | Product scope, milestones, M1 contracts, fixture, acceptance matrix, open choices | [docs/PRD.md](docs/PRD.md) |
 | How the code is built, the traced save workflow, the rules the code keeps, differences between the PRD and the code, what is still unverified | [docs/architecture.md](docs/architecture.md) |
 | Launch, smoke steps, limits, baseline verification | [README.md](README.md) |
-| Backlog | Epic issue #1 and its sub-issues on GitHub. The epic gives the order, the dependencies, the parallel tracks and the estimates. |
+| Backlog | Epic issue #1 and its sub-issues on GitHub, in dependency order: #7, #2, #8, #4, #5, #3, #6, #9. The epic gives the dependencies, the parallel tracks and the estimates. |
 | Loop setup and its limits | [LOOP.md](LOOP.md), [loop-constraints.md](loop-constraints.md) |
 | Project subagents and their origin | [.claude/agency-agents/README.md](.claude/agency-agents/README.md) |
 
