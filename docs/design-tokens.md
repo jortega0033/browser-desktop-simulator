@@ -12,11 +12,11 @@ Copy the file over `browser_desktop/static/tokens.css`. Nothing else changes.
 
 ## Rule
 
-New UI uses these tokens. No new colour literals in CSS or JavaScript. Text never sits on a bare alpha layer; use a solid surface token. Yellow follows the rules below.
+New UI uses these tokens. No new colour literals in CSS or JavaScript. Text never sits on a bare alpha layer; use a solid surface token. Yellow appears only on the primary action, the current-step marker and the current selection; see the rules below.
 
 ### Yellow accent
 
-The header comment of `tokens.css` says yellow is used only on the primary button and the current-step marker, among other places. That comment is narrower than the rule. The copy must stay identical to its source, so the comment cannot be corrected here. This document takes precedence over it.
+The header comment of `tokens.css` names the primary button, the current-step node and three uses from the source app (the "your turn" chip, the hero kicker dot and the overlay opening dot), and does not name the current selection. It differs from the rules below. The copy must stay identical to its source, so the comments are not edited here. Where any comment in `tokens.css`, including the comments on single tokens such as `--primary` and `--state-selected`, differs from this document, this document takes precedence.
 
 1. Current selection (decided by the owner on 2026-11-23). The yellow accent is used for the primary action, the current-step marker and the current selection (UI rule 8 in `ui-quality.md`). How (recommended by the orchestrator, adopted under the owner's delegation of the same day): a selection uses a solid `--primary` fill with `--on-primary` text, not only a yellow border, which has about 1.5:1 against white on light. It also carries a second sign that is not colour (weight, icon or text) and the existing aria attribute (for example `aria-current` or `aria-selected`). Never a tint with a same-hue border and never a thick one-sided border.
 2. Focus ring (recommended by the orchestrator, adopted under the owner's delegation of 2026-11-23). `--focus` is a focus indicator and is exempt from the accent limit, including where it is yellow in dark. A ticket that says the focus style stays unchanged means the rule on `main` after the token pull request.
@@ -36,7 +36,7 @@ Dark is the primary design. The light values are in `:root`; the operating syste
 - Accent: `--primary`, `--primary-press`, `--primary-edge`, `--on-primary`, `--focus`
 - Dark block: `--ink`, `--on-ink`, `--on-ink-muted`, `--ink-border`
 - Status: `--success`, `--ok`, `--ok-bg`, `--warn-fg`, `--warn-bg`, `--danger`, `--danger-bg`, `--info`
-- Alpha layers: `--state-hover`, `--state-selected`, `--btn-secondary`, `--glass*`, `--scrim`
+- Alpha layers: `--state-hover`, `--state-selected`, `--btn-secondary`, `--glass*`, `--scrim`. `--state-selected` is not used to mark the current selection; that uses a solid `--primary` fill (rule 1 above).
 - Shadows: `--shadow-1` to `--shadow-3`
 - Type: `--font`, `--font-display`, `--mono`
 - Space and radius: `--space-1` to `--space-7`, `--radius-control`, `--radius-card`, `--radius-pill`
