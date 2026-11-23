@@ -59,8 +59,8 @@ body {
   gap: 0.5rem;
   padding: 0.75rem;
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
+  border: 2px solid var(--border);
+  border-radius: 2px 14px 2px 14px;
   overflow: auto;
 }
 
@@ -84,8 +84,8 @@ button {
   padding: 0.4rem 0.75rem;
   color: var(--fg);
   background: var(--bg-raised);
-  border: 1px solid var(--control-border);
-  border-radius: var(--radius-control);
+  border: 2px solid var(--control-border);
+  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -165,8 +165,8 @@ input, textarea {
   font-size: 0.95rem;
   color: var(--fg);
   background: var(--bg-raised);
-  border: 1px solid var(--input-border);
-  border-radius: var(--radius-control);
+  border: 2px solid var(--input-border);
+  border-radius: 4px;
   padding: 0.4rem 0.5rem;
   width: 100%;
   min-width: 0;
@@ -192,8 +192,7 @@ textarea {
   padding: 0.5rem;
   background: var(--warn-bg);
   color: var(--warn-fg);
-  border: 1px solid var(--control-border);
-  border-radius: var(--radius-control);
+  border: 2px solid var(--control-border);
 }
 
 .conflict[hidden], [hidden] { display: none; }
