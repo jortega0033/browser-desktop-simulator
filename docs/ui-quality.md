@@ -15,6 +15,8 @@ Ten rules for every screen and every piece of user-facing text in this repositor
 
 Colours, type, spacing and radii come from the shared tokens in [design-tokens.md](design-tokens.md); new UI uses them and adds no colour literals.
 
+Rule 8 is read with the "Yellow accent" section of `design-tokens.md` and owner decision 14 in `owner-decisions.md`: the accent also marks the current step, and `--focus` is a focus indicator, exempt from the accent limit.
+
 ## How the rules are applied
 
 - A UI ticket starts with the `ui-ux-pro-max` skill (`.claude/skills/ui-ux-pro-max/`): search its design system for the product type, then keep to these rules where the skill's suggestions differ.
