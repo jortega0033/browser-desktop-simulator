@@ -123,6 +123,7 @@ class HealthAndStaticTests(ApiTestCase):
         cases = {
             "/": ("index.html", "text/html"),
             "/index.html": ("index.html", "text/html"),
+            "/static/tokens.css": ("tokens.css", "text/css"),
             "/static/app.css": ("app.css", "text/css"),
             "/static/app.js": ("app.js", "text/javascript"),
         }
@@ -139,7 +140,7 @@ class HealthAndStaticTests(ApiTestCase):
     def test_static_routes_cover_exactly_the_allowlist(self):
         self.assertEqual(
             set(srv.STATIC_ROUTES),
-            {"/", "/index.html", "/static/app.css", "/static/app.js"},
+            {"/", "/index.html", "/static/tokens.css", "/static/app.css", "/static/app.js"},
         )
 
     def test_traversal_and_unknown_paths_are_404(self):

@@ -19,7 +19,7 @@ A three-layer program with no framework and no dependency outside the Python sta
 | Command line | `browser_desktop/__main__.py`, `browser_desktop/cli.py` | Parse `--data-dir` and `--port` (both required, `cli.py:30-33`), start the server, print the URL, map start-up failures to exit codes 2 (`cli.py:38-40`) and 1 (`cli.py:41-43`) | No HTTP, no SQL |
 | HTTP | `browser_desktop/server.py` | `ThreadingHTTPServer` bound to `127.0.0.1` (`server.py:376`), request guards, routing (`server.py:197-246`), exact JSON key sets (`server.py:250-291`), static allowlist (`server.py:20-25`), security headers (`server.py:27-37`), error envelope | No SQL; never joins request input into a host path |
 | Storage | `browser_desktop/storage.py` | The only user of `sqlite3`. Validation of names, text and revisions (`storage.py:77-108`), migrations (`storage.py:25-37`, `183-199`), every transaction | No HTTP objects |
-| Page | `browser_desktop/static/index.html`, `app.css`, `app.js` | One page, one script (a single function scope with one `state` object, `app.js:27-36`), talks to `/api/v1` only (`app.js:4`) | No storage in the browser, no HTML sinks, no inline script or style |
+| Page | `browser_desktop/static/index.html`, `tokens.css`, `app.css`, `app.js` | One page, one script (a single function scope with one `state` object, `app.js:27-36`), talks to `/api/v1` only (`app.js:4`) | No storage in the browser, no HTML sinks, no inline script or style |
 
 Data ownership: the server owns all data, in `<data-dir>/desktop.sqlite3`. The page keeps only the text it loaded (`state.baseText`) and the revision it loaded (`state.revision`) so that it can send `base_revision` on save.
 
