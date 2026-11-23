@@ -142,6 +142,6 @@ How a ticket gets from the backlog to a ready pull request. Each piece is define
 - **Pull request:** [.github/pull_request_template.md](.github/pull_request_template.md).
 - **Ticket labels:** `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`. Ticket form: [.github/ISSUE_TEMPLATE/implementation-ticket.md](.github/ISSUE_TEMPLATE/implementation-ticket.md).
 - **Changelog:** every ticket pull request adds one line to [CHANGELOG.md](CHANGELOG.md).
-- **UI and copy:** [docs/ui-quality.md](docs/ui-quality.md); the `ui-ux-pro-max` and `unslop` skills are in `.claude/skills/`.
+- **UI and copy:** [docs/ui-quality.md](docs/ui-quality.md); colours, type and spacing come from the tokens in [docs/design-tokens.md](docs/design-tokens.md); the `ui-ux-pro-max` and `unslop` skills are in `.claude/skills/`.
 - **Decisions:** [docs/owner-decisions.md](docs/owner-decisions.md). Security reports: [SECURITY.md](SECURITY.md).
 - **Only the owner merges and releases** ([docs/RELEASING.md](docs/RELEASING.md)). Agents take a ticket up to a ready pull request and stop.

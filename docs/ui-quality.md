@@ -13,6 +13,8 @@ Ten rules for every screen and every piece of user-facing text in this repositor
 9. Dense, aligned layouts on a consistent spacing scale. No card grid where a table or a list is the right form.
 10. User-facing copy is plain and specific: no filler, no exclamation marks, and the same word for the same thing everywhere.
 
+Colours, type, spacing and radii come from the shared tokens in [design-tokens.md](design-tokens.md); new UI uses them and adds no colour literals.
+
 ## How the rules are applied
 
 - A UI ticket starts with the `ui-ux-pro-max` skill (`.claude/skills/ui-ux-pro-max/`): search its design system for the product type, then keep to these rules where the skill's suggestions differ.

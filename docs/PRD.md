@@ -58,7 +58,7 @@ All JSON, `Cache-Control: no-store`. Errors: `{"error":{"code","message"}}`.
 | `PUT /api/v1/files/{name}` `{text,base_revision}` | 200 file, revision+1 | 400, 404, 409 `conflict` (+ `current`) |
 | `POST /api/v1/fixtures` `{}` | 200 `{created:[...],files:[...]}`, never overwrites | 400, 403, 415, 409 `file_limit` |
 
-General: 403 `forbidden_origin`, 404, 405 (+`Allow`), 411, 413, 415, 500 generic. No CORS headers. `GET /` serves HTML; static allowlist is `/`, `/index.html`, `/static/app.css`, `/static/app.js`.
+General: 403 `forbidden_origin`, 404, 405 (+`Allow`), 411, 413, 415, 500 generic. No CORS headers. `GET /` serves HTML; static allowlist is `/`, `/index.html`, `/static/tokens.css`, `/static/app.css`, `/static/app.js`.
 
 ### 5.2 Schema
 
